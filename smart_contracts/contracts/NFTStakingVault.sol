@@ -168,32 +168,28 @@ contract NFTStakingVault is IERC721Receiver {
     /// @notice internal function to get daily staking rewards
     /// @dev calculate the daily reward based on the NFT staking period using pre-defined logic
     /// @param stakingPeriod time period during which the NFT was stake
-   function _calculateReward(uint256 stakingPeriod) internal pure returns (uint256 dailyReward) {
+  function _calculateReward(uint256 stakingPeriod) internal pure returns (uint256 dailyReward) {
     // Initial reward of 5 tokens per day
     uint256 initialReward = 5;
 
-    // Increment in reward per day
-    uint256 rewardIncrement = 5e14; // 0.05 tokens in wei (18 decimals)
+    // Increment in reward per day 
+    uint256 rewardIncrement = 0.05; // 0.05 tokens
 
     // Maximum staking period with increasing rewards (180 days)
-    uint256 maxIncreasingPeriod = 180 days;
+    uint256 maxIncreasingPeriod = 180 days; 
 
-    // Maximum fixed reward period (after 180 days)
-    uint256 maxFixedRewardPeriod = 365 days; // You can adjust this as needed
+    // Fixed reward after 180 days
+    uint256 fixedReward = 14;
 
     if (stakingPeriod <= maxIncreasingPeriod) {
-        // Calculate the increasing reward based on the provided formula
-        dailyReward = initialReward + (rewardIncrement * stakingPeriod) / 1 days;
+        dailyReward = initialReward + rewardIncrement * stakingPeriod;
     } else {
         // Fixed reward of 14 tokens per day after 180 days
-        dailyReward = 14;
-    }
-
-    // Ensure the reward doesn't exceed the maximum fixed reward
-    if (stakingPeriod > maxFixedRewardPeriod) {
-        dailyReward = 14;
+        dailyReward = fixedReward;
     }
 }
+
+
 
 
     // ********* //
