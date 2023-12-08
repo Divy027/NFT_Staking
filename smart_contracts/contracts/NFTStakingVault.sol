@@ -182,7 +182,7 @@ contract NFTStakingVault is IERC721Receiver {
     uint256 fixedReward = 14;
 
     if (stakingPeriod <= maxIncreasingPeriod) {
-        dailyReward = initialReward + rewardIncrement * stakingPeriod;
+        dailyReward = initialReward + (rewardIncrement * stakingPeriod) / 1 days;
     } else {
         // Fixed reward of 14 tokens per day after 180 days
         dailyReward = fixedReward;
